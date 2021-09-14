@@ -9,7 +9,7 @@ namespace SportEvents.Data
 {
     public class EventContext : DbContext
     {
-        public EventContext() : base() { }
-        public virtual DbSet<Event> Event { get; set; }
+        public EventContext(DbContextOptions<EventContext> options) : base(options) { }
+        public virtual DbSet<Event> Events { get; set; }
     }
 }

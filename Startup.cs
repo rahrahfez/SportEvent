@@ -12,6 +12,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SportEvents.Data;
+using SportEvents.Contracts;
+using SportEvents.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace SportEvents
 {
@@ -29,8 +32,10 @@ namespace SportEvents
         {
             services.AddDbContext<EventContext>(opts =>
             {
-                
+                opts.UseInMemoryDatabase("InMemoryDB");
             });
+            services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IEventRepository, EventRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -47,6 +52,8 @@ namespace SportEvents
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SportEvents v1"));
             }
+
+            app.DataSeed();
 
             app.UseHttpsRedirection();
 
