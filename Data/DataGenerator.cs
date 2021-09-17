@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SportEvents.Data;
 using SportEvents.Models;
+using SportEvents.Entities;
 
 namespace SportEvents.Data
 {
@@ -24,7 +25,7 @@ namespace SportEvents.Data
             }
 
             context.Events.Add(
-                new Event(1, "Carolina Panthers", "New York Jets", DateTime.Now, DateTime.Now.AddHours(2)));
+                new Event("Carolina Panthers", "New York Jets", DateTime.Now));
 
             context.SaveChanges();
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SportEvents.Contracts;
 using SportEvents.Models;
+using SportEvents.Entities;
 
 namespace SportEvents.Data
 {
@@ -21,7 +22,7 @@ namespace SportEvents.Data
         }
         public IEnumerable<Event> GetAllEvents()
         {
-            return _context.Events;
+            return _context.Events.ToList();
         }
         public bool SaveChanges()
         {
