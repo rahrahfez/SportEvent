@@ -2573,7 +2573,8 @@
           "Microsoft.EntityFrameworkCore.InMemory": "5.0.9",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.9",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.10.14",
-          "Swashbuckle.AspNetCore": "5.6.3"
+          "Swashbuckle.AspNetCore": "5.6.3",
+          "xunit": "2.4.1"
         },
         "compile": {
           "bin/placeholder/SportEvents.dll": {}
