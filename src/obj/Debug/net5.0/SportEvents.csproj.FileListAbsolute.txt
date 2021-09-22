@@ -126,3 +126,7 @@ C:\Users\David\Documents\Projects\SportEvents\src\obj\Debug\net5.0\SportEvents.d
 C:\Users\David\Documents\Projects\SportEvents\src\obj\Debug\net5.0\ref\SportEvents.dll
 C:\Users\David\Documents\Projects\SportEvents\src\obj\Debug\net5.0\SportEvents.pdb
 C:\Users\David\Documents\Projects\SportEvents\src\obj\Debug\net5.0\SportEvents.genruntimeconfig.cache
+C:\Users\David\Documents\Projects\SportEvents\src\bin\Debug\net5.0\xunit.abstractions.dll
+C:\Users\David\Documents\Projects\SportEvents\src\bin\Debug\net5.0\xunit.assert.dll
+C:\Users\David\Documents\Projects\SportEvents\src\bin\Debug\net5.0\xunit.core.dll
+C:\Users\David\Documents\Projects\SportEvents\src\bin\Debug\net5.0\xunit.execution.dotnet.dll

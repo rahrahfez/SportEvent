@@ -13,6 +13,8 @@ namespace SportEvents.Helpers
         public AutomapperProfiles()
         {
             CreateMap<EventRequestDTO, Event>();
+            CreateMap<Event, EventResponseDTO>();
+            CreateMap<EventRequestDTO, EventResponseDTO>();
         }
     }
 }

@@ -34,8 +34,8 @@ namespace SportEvents
             {
                 opts.UseInMemoryDatabase("InMemoryDB");
             });
-            services.AddScoped<IEventService, EventService>();
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers();
             services.AddSwaggerGen(c =>

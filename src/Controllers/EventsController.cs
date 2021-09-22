@@ -17,36 +17,56 @@ namespace SportEvents.Controllers
     {
         private readonly IEventRepository _repo;
         private readonly IMapper _mapper;
-        public EventsController(IEventRepository repo, IMapper mapper)
+        private readonly ICommandDataClient _commandDataClient;
+        public EventsController(
+            IEventRepository repo, 
+            IMapper mapper, 
+            ICommandDataClient commandDataClient)
         {
             _repo = repo;
             _mapper = mapper;
+            _commandDataClient = commandDataClient;
         }
         [HttpGet]
-        public IActionResult GetAllEvents()
+        public async Task<IActionResult> GetAllEvents()
         {
-            var events = _repo.GetAllEvents();
+            var events = await _repo.GetAllEvents();
 
             return Ok(events);
+
         }
+
         [HttpGet]
         [Route("{id}", Name = "Event")]
-        public IActionResult GetEventById(int id)
+        public ActionResult<EventResponseDTO> GetEventById(int id)
         {
             var sportEvent = _repo.GetEventById(id);
+            var eventResponse = _mapper.Map<EventResponseDTO>(sportEvent);
 
-            return Ok(sportEvent);
+            return Ok(eventResponse);
         }
 
         [HttpPost]
-        public IActionResult CreateEvent([FromBody]EventRequestDTO e)
+        public async Task<ActionResult<EventResponseDTO>> CreateEvent([FromBody]EventRequestDTO e)
         {
             var newEvent = _mapper.Map<Event>(e);
             _repo.CreateEvent(newEvent);
+            _repo.SaveChanges();
+
+            try
+            {
+                await _commandDataClient.SendEventToCommandAsync(_mapper.Map<EventResponseDTO>(newEvent));
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}");
+            }
+
             if(!_repo.SaveChanges())
             {
                 return BadRequest();
-            } else
+            } 
+            else
             {
                 return CreatedAtRoute("Event", new EventResponseDTO { Home = e.Home, Away = e.Away, StartTime = DateTime.Now }, e);
             }

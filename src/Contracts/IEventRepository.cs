@@ -10,7 +10,7 @@ namespace SportEvents.Contracts
     public interface IEventRepository
     {
         bool SaveChanges();
-        IEnumerable<Event> GetAllEvents();
+        Task<IEnumerable<Event>> GetAllEvents();
         Event GetEventById(int id);
         void CreateEvent(Event e);
     }

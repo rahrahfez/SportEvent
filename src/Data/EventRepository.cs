@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SportEvents.Contracts;
-using SportEvents.Models;
 using SportEvents.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace SportEvents.Data
 {
@@ -18,11 +18,10 @@ namespace SportEvents.Data
         public void CreateEvent(Event e)
         {
             _context.Add(e);
-            _context.SaveChanges();
         }
-        public IEnumerable<Event> GetAllEvents()
+        public async Task<IEnumerable<Event>> GetAllEvents()
         {
-            return _context.Events.ToList();
+            return await _context.Events.ToListAsync();
         }
         public bool SaveChanges()
         {
