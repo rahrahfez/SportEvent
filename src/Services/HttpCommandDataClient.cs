@@ -28,6 +28,7 @@ namespace SportEvents.Services
                 "application/json");
 
             var response = await _httpClient.PostAsync(_config["CommandService"], httpContent);
+            Console.WriteLine($"{_config["CommandService"]}");
 
             if (response.IsSuccessStatusCode)
             {

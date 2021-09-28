@@ -15,3 +15,17 @@ spec:
       containers:
         - name: sportevents
           image: davidom582/sportevents:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sportevents-clusterip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: sportevents
+  ports:
+  - name: sportevents
+    protocol: TCP
+    port: 80
+      

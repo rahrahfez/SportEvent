@@ -9,6 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["./src/SportEvents.csproj", "."]
 COPY ["./SportEvents.Test/SportEvents.Test.csproj", "/SportEvents.Test/"]
+COPY ["./src/bin/Debug/net5.0/appsettings.Production.json", "."]
 RUN dotnet restore 
 COPY . .
 WORKDIR "/src/."

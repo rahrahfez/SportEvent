@@ -130,3 +130,4 @@ C:\Users\David\Documents\Projects\SportEvents\src\bin\Debug\net5.0\xunit.abstrac
 C:\Users\David\Documents\Projects\SportEvents\src\bin\Debug\net5.0\xunit.assert.dll
 C:\Users\David\Documents\Projects\SportEvents\src\bin\Debug\net5.0\xunit.core.dll
 C:\Users\David\Documents\Projects\SportEvents\src\bin\Debug\net5.0\xunit.execution.dotnet.dll
+C:\Users\David\Documents\Projects\SportEvents\src\bin\Debug\net5.0\appsettings.Production.json

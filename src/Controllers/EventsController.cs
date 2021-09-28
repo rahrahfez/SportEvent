@@ -38,16 +38,25 @@ namespace SportEvents.Controllers
 
         [HttpGet]
         [Route("{id}", Name = "Event")]
-        public ActionResult<EventResponseDTO> GetEventById(int id)
+        public IActionResult GetEventById(int id)
         {
             var sportEvent = _repo.GetEventById(id);
-            var eventResponse = _mapper.Map<EventResponseDTO>(sportEvent);
 
-            return Ok(eventResponse);
+            if (sportEvent == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var eventResponse = _mapper.Map<EventResponseDTO>(sportEvent);
+
+                return Ok(eventResponse);
+            }
+            
         }
 
         [HttpPost]
-        public async Task<ActionResult<EventResponseDTO>> CreateEvent([FromBody]EventRequestDTO e)
+        public async Task<IActionResult> CreateEvent([FromBody]EventRequestDTO e)
         {
             var newEvent = _mapper.Map<Event>(e);
             _repo.CreateEvent(newEvent);
@@ -55,7 +64,9 @@ namespace SportEvents.Controllers
 
             try
             {
-                await _commandDataClient.SendEventToCommandAsync(_mapper.Map<EventResponseDTO>(newEvent));
+                var eventResponse = _mapper.Map<EventResponseDTO>(newEvent);
+                Console.WriteLine("sending request to command service.");
+                await _commandDataClient.SendEventToCommandAsync(eventResponse);
             }
             catch(Exception ex)
             {

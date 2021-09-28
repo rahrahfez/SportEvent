@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SportEvents.Data;
+using SportEvents.Extensions;
 using SportEvents.Contracts;
 using SportEvents.Services;
 using Microsoft.EntityFrameworkCore;
@@ -20,9 +21,11 @@ namespace SportEvents
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _env;
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -30,10 +33,25 @@ namespace SportEvents
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<EventContext>(opts =>
+
+            if (_env.IsProduction())
             {
-                opts.UseInMemoryDatabase("InMemoryDB");
-            });
+                Console.WriteLine("using mssql");
+                services.AddDbContext<EventContext>(opts =>
+                {
+                    opts.UseSqlServer(Configuration.GetConnectionString("EventsConnection"));
+                });
+            }
+            else
+            {
+                Console.WriteLine("using inmemdb");
+                services.AddDbContext<EventContext>(opts =>
+                {
+                    opts.UseInMemoryDatabase("InMemoryDB");
+                });
+
+            }
+
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -54,9 +72,9 @@ namespace SportEvents
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SportEvents v1"));
             }
 
-            app.DataSeed();
+            //app.DataSeed(env.IsProduction());
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -66,6 +84,8 @@ namespace SportEvents
             {
                 endpoints.MapControllers();
             });
+            var ip = Configuration.GetValue<string>("CommandService");
+            Console.WriteLine($"CommandService endpoint: {ip}.");
         }
     }
 }
