@@ -72,7 +72,7 @@ namespace SportEvents
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SportEvents v1"));
             }
 
-            //app.DataSeed(env.IsProduction());
+            app.DataSeed(env.IsProduction());
 
             //app.UseHttpsRedirection();
 
