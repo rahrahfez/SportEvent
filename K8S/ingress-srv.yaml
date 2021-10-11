@@ -24,3 +24,10 @@ spec:
                 name: commands-clusterip-service
                 port:
                   number: 80
+          - path: /api/account
+            pathType: Prefix
+            backend:
+              service:
+                name: sb-accounts-clusterip-service
+                port:
+                  number: 80
